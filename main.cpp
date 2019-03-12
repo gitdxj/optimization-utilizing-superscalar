@@ -16,10 +16,11 @@ int main()
 {
     struct timeval start;
     struct timeval end;
-    unsigned long diff;
+    unsigned long diff1;
+    unsigned long diff2;
 
     // 这里测试的数据量选了两个，一个是2^10, 一个是2^20
-    int dimension = 1048576;
+    int dimension = 4096; // 16777216
     double *num = new double[dimension];
     get_vect(num, dimension);
     double sum = 0;
@@ -29,18 +30,33 @@ int main()
 //    sum = sum_no_recurse(num, dimension);
     gettimeofday(&end, NULL);
 
-    diff = 1000000*(end.tv_sec - start.tv_sec) + end.tv_usec - start.tv_usec;
+    diff1 = 1000000*(end.tv_sec - start.tv_sec) + end.tv_usec - start.tv_usec;
 
-    cout << "the time diff is " << diff << "ms"<<endl
-         << "the sum is " << sum << endl;
+    gettimeofday(&start, NULL);
+//    sum = sum_recurse(num, dimension);
+    sum = sum_no_recurse(num, dimension);
+    gettimeofday(&end, NULL);
+
+    diff2 = 1000000*(end.tv_sec - start.tv_sec) + end.tv_usec - start.tv_usec;
+
+
+
+
+    cout << "diff1 is " << diff1 << "us"<<endl
+         << "diff2 is" << diff2<<"us"<<endl;
 
     return 0;
 }
 
 double sum_recurse(double *num, int dim)
 {
-    if(dim == 2)
-        return (*num + *(num+1));
+    if(dim == 4)
+    {
+//        double s1 = *num + *(num+1);
+//        double s2 = *(num+2) + *(num+3);
+//        return s1+s2;
+        return *num + *(num+1) + *(num+2) + *(num+3);
+    }
     else return (sum_recurse(num, (int) dim/2)) + sum_recurse((num+dim/2), (int) dim/2);
 }
 
