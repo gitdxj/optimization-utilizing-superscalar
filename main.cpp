@@ -51,7 +51,7 @@ int main()
 //    read_2(num, len);
 //    read_4(num, len);
 
-
+    delete []num;
     return 0;
 }
 
@@ -108,13 +108,13 @@ double sum_2(double *num, int len)
 /***********计算部分************/
 /************start*************/
     double sum = 0;
-    for(int i = 0; i<=l; i = i + 2)
+    for(int i = 0; i<len; i = i + 2)
         sum += num[i] + num[i+1];
 /*************end**************/
     gettimeofday(&end, NULL);
 
     unsigned long time_interval = 1000000*(end.tv_sec - start.tv_sec) + end.tv_usec - start.tv_usec;
-    cout << "time interval(sum_2_ex): " << time_interval << " us" <<endl
+    cout << "time interval(sum_2): " << time_interval << " us" <<endl
         << "sum is " << sum <<endl;
 
     return sum;
@@ -183,6 +183,8 @@ double sum_reduction(double *num, int len)
     unsigned long time_interval = 1000000*(end.tv_sec - start.tv_sec) + end.tv_usec - start.tv_usec;
     cout << "time interval(sum_reduction): " << time_interval << " us" <<endl
         << "sum is " << sum <<endl;
+
+    return sum;
 }
 
 void read_1(double *num, int len)
